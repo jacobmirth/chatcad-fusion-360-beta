@@ -4,16 +4,12 @@
 import sys
 print(sys.path)
 import os
-
-# Get the path to the current script
-script_dir = os.path.dirname(os.path.realpath(__file__))
-
-# Add the 'lib' directory to sys.path
-lib_dir = os.path.join(script_dir, 'lib')
-sys.path.append(lib_dir)
-print(sys.path)
-
 import adsk.core, adsk.fusion, adsk.cam, traceback
+
+# Add the 'libs' folder to the Python path
+libs_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib")
+if libs_path not in sys.path:
+    sys.path.append(libs_path)
 
 # Import OpenAI with compatibility for different versions
 import openai

@@ -1,8 +1,5 @@
-#alpha_3.0
-#git test
- 
+
 import sys
-print(sys.path)
 import os
 import adsk.core, adsk.fusion, adsk.cam, traceback
 
@@ -284,8 +281,6 @@ def run(context):
         return response_message.strip()
     except Exception as e:
         return f"Error: {str(e)}"
-
-# github commit test 1!
 
 # Global list to keep handlers referenced
 handlers = []

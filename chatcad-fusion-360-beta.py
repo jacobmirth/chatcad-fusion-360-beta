@@ -3,17 +3,21 @@ import sys
 import os
 import adsk.core, adsk.fusion, adsk.cam, traceback
 
-# Add the 'libs' folder to the Python path
-libs_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib")
-if libs_path not in sys.path:
-    sys.path.append(libs_path)
+# Get the path to the current script
+script_dir = os.path.dirname(os.path.realpath(__file__))
+
+# Add the 'lib' directory to sys.path
+lib_dir = os.path.join(script_dir, 'lib')
 
 # Import OpenAI with compatibility for different versions
 import openai
 from openai import OpenAI
 
-# Your OpenAI API key here
-api_key = "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"
+# Retrieve the API key from the environment variable
+api_key = os.environ.get('OPENAI_API_KEY')
+
+if not api_key:
+    raise ValueError("API key not found. Please set the OPENAI_API_KEY environment variable.")
 
 # Initialize the OpenAI client
 client = OpenAI(api_key=api_key)

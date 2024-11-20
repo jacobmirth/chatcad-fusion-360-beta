@@ -1,4 +1,3 @@
-
 import sys
 import os
 import adsk.core, adsk.fusion, adsk.cam, traceback
@@ -22,39 +21,54 @@ if not api_key:
 # Initialize the OpenAI client
 client = OpenAI(api_key=api_key)
 
+handlers = []
+
 def run(context):
     ui = None
     try:
         app = adsk.core.Application.get()
         ui = app.userInterface
 
-        # Create a new command definition
-        cmd_def = ui.commandDefinitions.addButtonDefinition(
-            'myTextInputCommand', 
-            'ChatCAD input', 
-            'Shows a pop-up with a text input field'
-        )
+        # Get the Utilities tab
+        utilities_tab = ui.allToolbarTabs.itemById('ToolsTab')
+        if not utilities_tab:
+            ui.messageBox('Utilities tab not found.')
+            return
 
-        # Debugging: Confirm command creation
-        # ui.messageBox('Command Definition Created')
+        # Create a new panel in the Utilities tab if it doesn't exist
+        panel_id = 'ChatCADPanel'
+        chat_panel = utilities_tab.toolbarPanels.itemById(panel_id)
+        if not chat_panel:
+            chat_panel = utilities_tab.toolbarPanels.add(panel_id, 'ChatCAD')
+
+        # Create a new command definition
+        command_id = 'ChatCADCommand'
+        cmd_def = ui.commandDefinitions.itemById(command_id)
+        if not cmd_def:
+            cmd_def = ui.commandDefinitions.addButtonDefinition(
+                command_id,
+                'ChatCAD Input',
+                'Shows a pop-up with a text input field',
+                ''  # Assuming you have icons in a 'Resources' folder
+            )
+
+        # Add the button to the panel
+        button = chat_panel.controls.itemById(command_id)
+        if not button:
+            button = chat_panel.controls.addCommand(cmd_def)
 
         # Connect the command created event
         on_command_created = MyCommandCreatedHandler()
         cmd_def.commandCreated.add(on_command_created)
         handlers.append(on_command_created)
 
-        # Execute the command
-        cmd_def.execute()
-
-        # Debugging: Confirm command execution
-        # ui.messageBox('Command Executed')
-
-        # Keep the handler referenced globally
-        adsk.autoTerminate(False)
-
     except:
         if ui:
-            ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+            ui.messageBox('Failed in run:\n{}'.format(traceback.format_exc()))
+        else:
+            print('Failed in run:\n{}'.format(traceback.format_exc()))
+
+    adsk.autoTerminate(False)  # Place this outside the try-except block
 
 def stop(context):
     ui = None
@@ -62,14 +76,21 @@ def stop(context):
         app = adsk.core.Application.get()
         ui = app.userInterface
 
-        # Clean up the command definition
-        cmd_def = ui.commandDefinitions.itemById('myTextInputCommand')
+        # Remove the panel and command
+        utilities_tab = ui.allToolbarTabs.itemById('ToolsTab')
+        panel = utilities_tab.toolbarPanels.itemById('ChatCADPanel')
+        if panel:
+            panel.deleteMe()
+
+        cmd_def = ui.commandDefinitions.itemById('ChatCADCommand')
         if cmd_def:
             cmd_def.deleteMe()
 
     except:
         if ui:
-            ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+            ui.messageBox('Failed in stop:\n{}'.format(traceback.format_exc()))
+        else:
+            print('Failed in stop:\n{}'.format(traceback.format_exc()))
 
 class MyCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
     def __init__(self):

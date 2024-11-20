@@ -293,7 +293,7 @@ def run(context):
         
 
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="o1-preview",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}

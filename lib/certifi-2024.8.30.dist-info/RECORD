@@ -6,9 +6,9 @@ certifi-2024.8.30.dist-info/WHEEL,sha256=UvcQYKBHoFqaQd6LKyqHw9fxEolWLQnlzP0h_Lg
 certifi-2024.8.30.dist-info/top_level.txt,sha256=KMu4vUCfsjLrkPbSNdgdekS-pVJzBAJFO__nI8NF6-U,8
 certifi/__init__.py,sha256=p_GYZrjUwPBUhpLlCZoGb0miKBKSqDAyZC5DvIuqbHQ,94
 certifi/__main__.py,sha256=xBBoj905TUWBLRGANOcf7oi6e-3dMP4cEoG9OyMs11g,243
-certifi/__pycache__/__init__.cpython-38.pyc,,
-certifi/__pycache__/__main__.cpython-38.pyc,,
-certifi/__pycache__/core.cpython-38.pyc,,
+certifi/__pycache__/__init__.cpython-312.pyc,,
+certifi/__pycache__/__main__.cpython-312.pyc,,
+certifi/__pycache__/core.cpython-312.pyc,,
 certifi/cacert.pem,sha256=lO3rZukXdPyuk6BWUJFOKQliWaXH6HGh9l1GGrUgG0c,299427
 certifi/core.py,sha256=qRDDFyXVJwTB_EmoGppaXU_R9qCZvhl-EzxPMuV3nTA,4426
 certifi/py.typed,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0

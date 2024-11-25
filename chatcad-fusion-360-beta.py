@@ -2,11 +2,12 @@ import sys
 import os
 import adsk.core, adsk.fusion, adsk.cam, traceback
 
-# Get the path to the current script
+# Get the directory of the current script
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Add the 'lib' directory to sys.path
 lib_dir = os.path.join(script_dir, 'lib')
+sys.path.insert(0, lib_dir)
 
 # Import OpenAI with compatibility for different versions
 import openai
@@ -176,10 +177,15 @@ def clean_script(script):
 def generate_chatgpt_response(user_input):
     try:
         prompt = f"""
-You are a Fusion 360 expert. Write a Python script that works in Fusion 360's API environment to generate the following geometry: {user_input}. Only provide the Python script. Do not include ANY extra words or characters before or after the script. Before you give an output, take your time to think about how to approach modeling the desired geometry, deciding what basic features make up the desired geometry, and using best practices for 3D CAD modelling.
+You are a Fusion 360 expert. Write a Python script that works in Fusion 360's API environment to generate 
+the following geometry: {user_input}. 
+Only provide the Python script. Do not include ANY extra words or characters before or after the script. 
+Before you give an output, take your time to think about how to approach modeling the desired geometry, 
+deciding what basic features make up the desired geometry, and using best practices for 3D CAD modelling.
 
 For example, if the user input is:
-"Create a mounting plate 5in by 6in with 0.25in bolt holes on the corners, 0.3in filleted vertical edges, and a 1in square hole through the center"
+"Create a mounting plate 5in by 6in with 0.25in bolt holes on the corners, 0.3in filleted vertical edges, 
+and a 1in square hole through the center"
 
 Then the output should be:
 import adsk.core, adsk.fusion, adsk.cam, traceback
@@ -295,10 +301,10 @@ def run(context):
         response = client.chat.completions.create(
             model="o1-mini",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
+                #{"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=4000
+            max_completion_tokens=20000
         )
         response_message = response.choices[0].message.content
 

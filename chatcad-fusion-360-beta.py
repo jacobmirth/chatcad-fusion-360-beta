@@ -182,8 +182,12 @@ the following geometry: {user_input}.
 Only provide the Python script. Do not include ANY extra words or characters before or after the script. 
 Before you give an output, take your time to think about how to approach modeling the desired geometry, 
 deciding what basic features make up the desired geometry, and using best practices for 3D CAD modelling.
+Try to get it right on your first attempt, avoiding syntax errors and problems with fusion 360 commands such as
 
-For example, if the user input is:
+ File "<string>", line 36, in run
+AttributeError: 'SketchLines' object has no attribute 'addCenterPointRoundedRectangle'. Did you mean: 'addCenterPointRectangle'?.
+
+Here's an example output if the user input is:
 "Create a mounting plate 5in by 6in with 0.25in bolt holes on the corners, 0.3in filleted vertical edges, 
 and a 1in square hole through the center"
 
